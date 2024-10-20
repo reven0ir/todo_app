@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $task_id = $_POST['id'];
     $updated_task = $_POST['task'];
-    $updated_priority = $_POST['priority']; // Получаем обновленный приоритет
+    $updated_priority = $_POST['priority'];
 
     $stmt = $conn->prepare("UPDATE tasks SET task = ?, priority = ? WHERE id = ? AND user_id = ?");
     $stmt->bind_param("ssii", $updated_task, $updated_priority, $task_id, $_SESSION['user_id']);
@@ -30,11 +30,11 @@ if (isset($_GET['id'])) {
     $result = $stmt->get_result();
     $task = $result->fetch_assoc();
     if (!$task) {
-        header('Location: todo.php'); // Задача не найдена, перенаправляем на todo.php
+        header('Location: todo.php');
         exit();
     }
 } else {
-    header('Location: todo.php'); // Если ID не указан, перенаправляем на todo.php
+    header('Location: todo.php');
     exit();
 }
 ?>

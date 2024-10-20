@@ -8,7 +8,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    // Проверка на уникальность имени пользователя
     $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();

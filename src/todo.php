@@ -7,25 +7,22 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// Получение настроек пользователя
 $stmt = $conn->prepare("SELECT time_format FROM users WHERE id = ?");
 $stmt->bind_param("i", $_SESSION['user_id']);
 $stmt->execute();
 $user_settings = $stmt->get_result()->fetch_assoc();
 $time_format = $user_settings['time_format'];
 
-// Функция для отображения времени в нужном формате
 $display_time = function($datetime) use ($time_format) {
     if ($datetime) {
         if ($time_format === '12') {
-            return date('g:i A', strtotime($datetime)); // 12-часовой формат
+            return date('g:i A', strtotime($datetime));
         }
-        return date('H:i', strtotime($datetime)); // 24-часовой формат
+        return date('H:i', strtotime($datetime));
     }
-    return ''; // Если пустое значение, возвращаем пустую строку
+    return '';
 };
 
-// Обработка POST-запроса
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['task'])) {
     $task = $_POST['task'];
     $priority = $_POST['priority'];
@@ -39,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['task'])) {
     exit();
 }
 
-// Получение всех задач пользователя
 $tasks = $conn->query("SELECT * FROM tasks WHERE user_id = " . $_SESSION['user_id']);
 ?>
 

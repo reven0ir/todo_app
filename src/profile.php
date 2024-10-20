@@ -9,21 +9,17 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Получение информации о пользователе
 $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
 
-// Обработка загрузки аватара и изменения настроек
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Обработка загрузки аватара
     if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
         $upload_dir = '../uploads/';
         $avatar_name = basename($_FILES['avatar']['name']);
         $avatar_path = $upload_dir . $avatar_name;
 
-        // Перемещение загруженного файла
         if (move_uploaded_file($_FILES['avatar']['tmp_name'], $avatar_path)) {
             $stmt = $conn->prepare("UPDATE users SET avatar = ? WHERE id = ?");
             $stmt->bind_param("si", $avatar_path, $user_id);
@@ -31,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Обработка изменения формата времени
     $time_format = $_POST['time_format'];
     $stmt = $conn->prepare("UPDATE users SET time_format = ? WHERE id = ?");
     $stmt->bind_param("si", $time_format, $user_id);
@@ -56,7 +51,7 @@ $conn->close();
 <div class="container">
     <h1>User Profile</h1>
     <nav>
-        <a href="todo.php">Your Tasks</a> <!-- Ссылка на страницу задач -->
+        <a href="todo.php">Your Tasks</a>
         <a href="index.php">Home</a>
         <a href="logout.php">Logout</a>
     </nav>

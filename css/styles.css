@@ -1,5 +1,3 @@
-/* styles.css */
-
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -107,7 +105,6 @@ select option {
     font-size: 14px;
 }
 
-/* Цвета для опций приоритета */
 select option[value="low"] {
     background-color: #d4edda;
     color: #155724;

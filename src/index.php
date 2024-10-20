@@ -20,7 +20,7 @@ if (isset($_SESSION['user_id'])) {
     <h1>Welcome to Your To-Do List App</h1>
     <nav>
         <a href="src/todo.php">Your Tasks</a>
-        <a href="src/profile.php">Profile</a> <!-- Ссылка на профиль -->
+        <a href="src/profile.php">Profile</a>
         <a href="src/logout.php">Logout</a>
     </nav>
 </div>
